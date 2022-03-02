@@ -1,0 +1,11 @@
+.loading{
+    display: flex;
+    height: 100vh; /* Or whatever */
+    background-color: transparent;
+    background-repeat: no-repeat;
+}
+
+
+.loading-img{
+    margin: auto;
+}
