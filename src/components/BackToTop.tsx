@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { visibility , showButton, hideButton } from "./../slices/backToTopSlice";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { hideButton, showButton, visibility } from './../slices/backToTopSlice';
 
 export default function BackToTop() {
   const { visible } = useSelector(visibility);
@@ -24,9 +25,9 @@ export default function BackToTop() {
   }, []);
 
   return (
-    <div>
+    <div data-testid="buttonContainer" >
       {visible && (
-        <button onClick={scrollToTop} className="back-to-top">
+        <button onClick={scrollToTop}  aria-label="backToTop" className="back-to-top" >
           &#8679;
         </button>
       )}

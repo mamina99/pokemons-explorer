@@ -1,15 +1,14 @@
 // @flow 
 // @ts-ignore: Object is possibly 'null'
-import {useState , useEffect} from 'react';
-import Pokemon from "./interfaces/pokemon";
-import usePokemons from "./hooks/usePokemons"
-import Header from './Header';
-import BackToTop  from './BackToTop';
-import PokemonDetails from "./PokemonDetails";
-import Loading from "./Loading";
+import { useEffect, useState } from 'react';
 import { useDispatch } from "react-redux";
 import { selectPokemon } from "../slices/pokemonSlice";
-import { type } from 'os';
+import BackToTop from './BackToTop';
+import Header from './Header';
+import usePokemons from "./hooks/usePokemons";
+import Pokemon from "./interfaces/pokemon";
+import Loading from "./Loading";
+import PokemonDetails from "./PokemonDetails";
 
 export default function  PokemonMain () {
 
@@ -47,7 +46,6 @@ export default function  PokemonMain () {
     return (
         <div className="mainContainer">
       <Header />
-      <p data-testid="t">testing with jest</p>
       <div className="cardContainer">
         {pokemons.map((pokemon) => {
           return (

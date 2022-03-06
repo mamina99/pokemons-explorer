@@ -1,52 +1,16 @@
-import usePokemon from "../hooks/usePokemons";
-import PokemonMain from "../PokemonMain";
-import { fireEvent, render, screen } from "@testing-library/react";
-import { Provider } from "react-redux";
-import {store} from "../../store/store";
+import { fireEvent, render, screen } from '@testing-library/react';
+import { Provider } from 'react-redux';
+
+import { store } from '../../store/store';
+import usePokemon from '../hooks/usePokemons';
+import PokemonMain from '../PokemonMain';
+import { mockedData } from './utils/mocked-pokemons';
 
 // Solves TypeScript Errors
 const mockedUsePokemon = usePokemon as jest.Mock<any>; 
 
 // Mock the module
 jest.mock("../hooks/usePokemons");
-
-const mockedData =[ { 
-    id: 1,
-    abilities: [{
-        "ability": {
-        "name": "overgrow",
-        "url": "https://pokeapi.co/api/v2/ability/65/"
-        },
-        "is_hidden": false,
-        "slot": 1
-        }],
-    base_experience: 1,
-    height: 110,
-    weight: 110,
-    name: "pikachu",
-    stats: [{
-        "base_stat": 60,
-        "effort": 0,
-        "stat": {
-        "name": "hp",
-        "url": "https://pokeapi.co/api/v2/stat/1/"
-        }
-        }],
-    types: [{
-        "slot": 1,
-        "type": {
-        "name": "grass",
-        "url": "https://pokeapi.co/api/v2/type/12/"
-        }
-        }],
-    sprites: {
-        other: {
-            "official-artwork": {
-                "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png"
-                }
-        }
-    }
-}];
 
 
 describe("testing PokemonMain component", () => {
@@ -58,34 +22,45 @@ describe("testing PokemonMain component", () => {
 		jest.clearAllMocks();
 	});
 
-    //? pass
-    it.skip("Renders without crashing", () => {
+    it("Renders without crashing", () => {
         render(<Provider store={store}><PokemonMain /></Provider>);
     });
 
-     // ? pass
+
     it("render error message", async() => {
         mockedUsePokemon.mockImplementation(() => ({
 			isError: true,	
 	}));
 
-        const view = render(<Provider store={store}><PokemonMain /></Provider>);
+        render(<Provider store={store}><PokemonMain /></Provider>);
 
-        expect(await view.findByText(/ERROR/i)).toBeInTheDocument();
+        expect(await screen.findByText(/ERROR/i)).toBeInTheDocument();
     })
 
-    it("display some data hopefully", async() => {
-        
+    it("should display some pokemons", async() => {
+    
+        mockedUsePokemon.mockImplementation(() => ({ isLoading: false ,pokemons: mockedData }));
+
+        render(<Provider store={store}><PokemonMain /></Provider>);
+        expect(await screen.findByText(/pikachuu/i)).toBeInTheDocument();
+
+    })
+
+    it("should open a modal when we click on the pokemon name", async() => {
 
         mockedUsePokemon.mockImplementation(() => ({ isLoading: false ,pokemons: mockedData }));
 
-        const view = render(<Provider store={store}><PokemonMain /></Provider>);
-        expect(await view.findByText(/pikachu/i)).toBeInTheDocument();
+        render(<Provider store={store}><PokemonMain /></Provider>);
+        expect(await screen.findByText(/pikachuu/i)).toBeInTheDocument();
 
-        const btn = view.getByTestId("pokemonName");
+        const btn = screen.getByTestId("pokemonName");
 
         fireEvent.click(btn);
 
-        expect(await view.getByRole("presentation")).toBeVisible();
+        const modal = screen.getByRole("presentation"); 
+
+        expect(modal).toBeVisible();
+
     })
+
 })
