@@ -22,8 +22,8 @@ export default function  PokemonMain () {
 
   const handleClose = () => setOpen(false);
 
-  const {pokemons , isError, isLoading, fetchNextPage, hasNextPage, isFetching } = usePokemons();
-  // ? when we reach the bottom of the page
+  const {pokemons , isError, isLoading, fetchNextPage, hasNextPage } = usePokemons();
+  
   const handleScroll= () => {
     if(window.innerHeight + window.scrollY >= document.body.offsetHeight){
       fetchNextPage();
@@ -54,13 +54,9 @@ export default function  PokemonMain () {
                 <img
                   className="pokemonIcon"
                   src={
-                    pokemon.sprites.other["official-artwork"]["front_default"]
-                      ? pokemon.sprites.other["official-artwork"][
-                          "front_default"
-                        ]
-                      : pokemon.sprites["front_shiny"]
-                      ? pokemon.sprites["front_shiny"]
-                      : "https://media2.giphy.com/media/DRfu7BT8ZK1uo/200.webp?cid=ecf05e47svqa05w3manovg6j7e81ths2633hgcrfn4vp1y1a&rid=200.webp&ct=g"
+                    pokemon.sprites.other["official-artwork"]["front_default"] ??
+                    pokemon.sprites["front_shiny"] ?? 
+                    "https://media2.giphy.com/media/DRfu7BT8ZK1uo/200.webp?cid=ecf05e47svqa05w3manovg6j7e81ths2633hgcrfn4vp1y1a&rid=200.webp&ct=g"
                   }
                   alt=""
                 />

@@ -55,7 +55,7 @@ describe("test back-to-top button", () => {
         const backToTopBtn = screen.getByRole('button', {
                 name: /backToTop/i
               }).onclick = mockOnClick;
-
+        
          expect(backToTopContainer).not.toBeEmptyDOMElement();
     })
 })

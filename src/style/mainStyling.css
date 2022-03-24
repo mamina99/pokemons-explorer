@@ -15,6 +15,20 @@ body{
     margin: 1rem;
     display: flex;
     flex-direction: column;
+    animation-name: moveInBottom;
+    animation-duration:2s;
+    animation-delay: 0.5;
+}
+
+@keyframes moveInBottom {
+    0%{
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    100%{
+        opacity: 1;
+        transform: translateY(0);
+    }   
 }
 
 .pokemonIcon-container{

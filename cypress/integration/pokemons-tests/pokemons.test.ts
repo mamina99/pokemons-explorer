@@ -23,7 +23,7 @@ describe("Pokemon end to end test", () => {
   });
 
   // ! back to top position
-  it("brings us up to the top of the screen when we click back-to-top button  ", () => {
+  it("brings us up to the top of the screen when we click back-to-top button", () => {
     cy.visit("/");
     cy.window().its("scrollY").should("equal", 0);
 

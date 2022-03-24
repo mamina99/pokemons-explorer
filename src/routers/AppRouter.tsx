@@ -2,7 +2,7 @@ import React from "react";
 import PokemonMain from "../components/PokemonMain";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-export default function AppRouter () {
+export default function AppRouter () : JSX.Element {
   return (
     <div>
       <BrowserRouter>
